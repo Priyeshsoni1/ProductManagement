@@ -4,6 +4,7 @@ import React, { createContext, useContext, useReducer, useEffect } from "react";
 // Actions
 export const SET_PRODUCTS = "SET_PRODUCTS";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const SET_PAGE = "SET_PAGE";
 export const SET_SELECTED_PRODUCT = "SET_SELECTED_PRODUCT";
 export const SET_VIEW_MODE = "SET_VIEW_MODE";
@@ -25,7 +26,15 @@ export const productReducer = (state, action) => {
             ? null
             : state.selectedProduct,
       };
-
+    case UPDATE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.map((item) => {
+          if (item.id == action.payload.id) return action.payload;
+          return item;
+        }),
+        selectedProduct: action.payload,
+      };
     case SET_PAGE:
       return { ...state, currentPage: action.payload };
 

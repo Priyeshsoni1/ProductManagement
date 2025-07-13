@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from "react";
 import TableHeader from "./TableHeader";
-import TableRow from "./TableRow";
+
 import { useCart } from "../../hooks/useCart";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useProducts } from "../../hooks/useProduct";
+import EditProductDialog from "../ProductEdit";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -23,7 +24,7 @@ const TableContainer = () => {
     setSelectedProduct(product);
     setCurrentView("detail");
   };
-
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
   const {
     cart: items,
     addToCart: onAddToCart,
@@ -118,25 +119,36 @@ const TableContainer = () => {
                 {columns.map((col) => {
                   if (col.key === "actions") {
                     return (
-                      <td key={col.key} className="px-3 py-2 space-x-2">
-                        <button
-                          onClick={() => onAddToCart(product)}
-                          className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-xs"
-                        >
-                          Add
-                        </button>
-                        <button
-                          onClick={() => onView(product)}
-                          className="bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs"
-                        >
-                          View
-                        </button>
-                        <button
-                          onClick={() => onDelete(product.id)}
-                          className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-xs"
-                        >
-                          Delete
-                        </button>
+                      <td key={col.key} className="px-3 py-2">
+                        <div className="flex flex-wrap sm:flex-nowrap gap-2">
+                          <button
+                            onClick={() => onAddToCart(product)}
+                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-xs"
+                          >
+                            Add
+                          </button>
+                          <button
+                            className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-xs"
+                            onClick={() => {
+                              setSelectedProduct(product);
+                              setIsOpenEdit(true);
+                            }}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => onView(product)}
+                            className="bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs"
+                          >
+                            View
+                          </button>
+                          <button
+                            onClick={() => onDelete(product.id)}
+                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-xs"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </td>
                     );
                   }
@@ -147,7 +159,7 @@ const TableContainer = () => {
                         <img
                           src={product.image}
                           alt={product.name}
-                          className="w-10 h-10 object-cover rounded"
+                          className="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded"
                         />
                       </td>
                     );
@@ -198,6 +210,10 @@ const TableContainer = () => {
           Next
         </button>
       </div>
+      <EditProductDialog
+        open={isOpenEdit}
+        onClose={() => setIsOpenEdit(false)}
+      />
     </div>
   );
 };

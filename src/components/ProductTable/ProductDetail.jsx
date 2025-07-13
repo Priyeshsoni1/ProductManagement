@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "../../hooks/useCart";
 import { useProducts } from "../../hooks/useProduct";
+import EditProductDialog from "../ProductEdit";
 
 const ProductDetail = () => {
   //   const [viewMode, setViewMode] = useState("table"); // "table" | "list"
   // const [currentView, setCurrentView] = useState("main"); // "main" | "detail"
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
   const {
     selectedProduct: product,
     deleteProduct: onDelete,
@@ -107,6 +109,15 @@ const ProductDetail = () => {
               Add to Cart
             </button>
             <button
+              className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-xs"
+              onClick={() => {
+                setSelectedProduct(product);
+                setIsOpenEdit(true);
+              }}
+            >
+              Edit
+            </button>
+            <button
               onClick={() => {
                 onDelete(product.id);
                 setCurrentView("main");
@@ -118,6 +129,11 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+
+      <EditProductDialog
+        open={isOpenEdit}
+        onClose={() => setIsOpenEdit(false)}
+      />
     </div>
   );
 };

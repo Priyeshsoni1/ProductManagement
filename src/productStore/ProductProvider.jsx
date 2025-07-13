@@ -8,7 +8,8 @@ import {
   SET_PRODUCTS,
   SET_SELECTED_PRODUCT,
   SET_VIEW_MODE,
-} from "./productContext";
+  UPDATE_PRODUCT,
+} from "./ProductContext";
 import { generateMockProducts } from "../utils/mockData";
 const initialState = {
   products: [],
@@ -30,6 +31,8 @@ export const ProductProvider = ({ children }) => {
   }, []);
 
   const deleteProduct = (id) => dispatch({ type: DELETE_PRODUCT, payload: id });
+  const updateProduct = (product) =>
+    dispatch({ type: UPDATE_PRODUCT, payload: product });
   const setPage = (page) => dispatch({ type: SET_PAGE, payload: page });
   const setSelectedProduct = (product) =>
     dispatch({ type: SET_SELECTED_PRODUCT, payload: product });
@@ -42,6 +45,7 @@ export const ProductProvider = ({ children }) => {
       value={{
         ...state,
         deleteProduct,
+        updateProduct,
         setPage,
         setSelectedProduct,
         setViewMode,

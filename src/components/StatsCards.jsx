@@ -2,8 +2,7 @@ import React from "react";
 import { useProducts } from "../hooks/useProduct";
 
 const StatsCards = () => {
-  const { products, selectedProduct, deleteProduct, setSelectedProduct } =
-    useProducts();
+  const { products } = useProducts();
   const totalProducts = products.length;
   const totalRevenue = products.reduce((sum, p) => sum + p.price * p.stock, 0);
   const lowStockCount = products.filter((p) => p.stock < 20).length;
