@@ -12,7 +12,7 @@ const Header = ({ onCartClick }) => {
   const cartCount = cart.length;
   return (
     <header className="bg-white shadow p-4 flex items-center justify-between">
-      <div className="text-xl font-semibold">🛍️ Product Dashboard</div>
+      <div className="text-xl font-semibold">🛍️ Hack2skill</div>
       <div className="flex items-center gap-4">
         <button
           onClick={onCartClick}
